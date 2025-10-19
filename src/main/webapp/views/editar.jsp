@@ -5,26 +5,26 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-    <title>Editar Producto</title>
+    <title>Editar Empleado</title>
 </head>
 <body>
-<h1>Editar Producto</h1>
+<h1>Editar Empleado</h1>
 <form action="productos" method="post">
-    <c:set var="producto" value="${producto}"></c:set>
+    <c:set var="empleado" value="${empleado}"></c:set>
     <input type="hidden" name="opcion" value="editar">
-    <input type="hidden" name="id" value="${producto.id}">
+    <input type="hidden" name="id" value="${empleado.id}">
     <table border="1">
         <tr>
             <td>Nombre:</td>
-            <td><input type="text" name="nombre" size="50" value="${producto.nombre}"></td>
+            <td><input type="text" name="nombre" size="50" value="${empleado.nombre}"></td>
         </tr>
         <tr>
             <td>Cantidad:</td>
-            <td><input type="text" name="cantidad" size="50" value="${producto.cantidad}"></td>
+            <td><input type="text" name="cantidad" size="50" value="${empleado.cantidad}"></td>
         </tr>
         <tr>
             <td>Precio:</td>
-            <td><input type="text" name="precio" size="50" value="${producto.precio}"></td>
+            <td><input type="text" name="precio" size="50" value="${empleado.precio}"></td>
         </tr>
     </table>
     <input type="submit" value="Guardar">

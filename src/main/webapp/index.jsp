@@ -15,6 +15,9 @@
     <tr>
         <td><a href="productos?opcion=listar"> Listar Empleados</a></td>
     </tr>
+    <tr>
+        <td><a href="productos?opcion=listarNom"> Listar Nominas Empleados</a></td>
+    </tr>
 </table>
 </body>
 </html>

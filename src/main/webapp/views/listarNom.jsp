@@ -5,18 +5,14 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-    <title>Listar Empleados</title>
+    <title>Listar Nominas Empleados</title>
 </head>
 <body>
-<h1>Listar Empleados</h1>
+<h1>Listar Nominas</h1>
 <table border="1">
     <tr>
         <td>Dni</td>
-        <td>Nombre</td>
-        <td>Sexo</td>
-        <td>Categoria</td>
-        <td>Anyos</td>
-        <td>Accion</td>
+        <td>Nomina</td>
     </tr>
     <c:forEach var="empleado" items="${lista}">
         <tr>
@@ -26,9 +22,6 @@
                 </a>
             </td>
             <td><c:out value="${ empleado.nombre}"></c:out></td>
-            <td><c:out value="${ empleado.sexo}"></c:out></td>
-            <td><c:out value="${ empleado.categoria}"></c:out></td>
-            <td><c:out value="${ empleado.anyos}"></c:out></td>
             <td>
                 <a href="productos?opcion=eliminar&id=<c:out value="${ empleado.dni}"></c:out>">
                     Eliminar

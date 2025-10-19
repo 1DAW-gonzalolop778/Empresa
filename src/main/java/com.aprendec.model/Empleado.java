@@ -1,8 +1,6 @@
 package com.aprendec.model;
 
-import java.sql.Date;
-
-public class Producto {
+public class Empleado {
 
     private String dni;
     private String nombre;
@@ -10,7 +8,7 @@ public class Producto {
     private int categoria;
     private int anyos;
 
-    public Producto(String dni, String nombre, String sexo, int categoria, int anyos) {
+    public Empleado(String dni, String nombre, String sexo, int categoria, int anyos) {
         super();
         this.dni = dni;
         this.nombre = nombre;
@@ -19,7 +17,7 @@ public class Producto {
         this.anyos = anyos;
     }
 
-    public Producto() {
+    public Empleado() {
         // TODO Auto-generated constructor stub
     }
 

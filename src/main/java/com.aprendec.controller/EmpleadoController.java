@@ -13,20 +13,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.aprendec.dao.ProductoDAO;
-import com.aprendec.model.Producto;
+import com.aprendec.dao.EmpleadoDAO;
+import com.aprendec.model.Empleado;
 
 /**
  * Servlet implementation class ProductoController
  */
 @WebServlet(description = "administra peticiones para la tabla productos", urlPatterns = { "/productos" })
-public class ProductoController extends HttpServlet {
+public class EmpleadoController extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ProductoController() {
+    public EmpleadoController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -47,12 +47,12 @@ public class ProductoController extends HttpServlet {
             requestDispatcher.forward(request, response);
         } else if (opcion.equals("listar")) {
 
-            ProductoDAO productoDAO = new ProductoDAO();
-            List<Producto> lista = new ArrayList<>();
+            EmpleadoDAO empleadoDAO = new EmpleadoDAO();
+            List<Empleado> lista = new ArrayList<>();
             try {
-                lista = productoDAO.obtenerProductos();
-                for (Producto producto : lista) {
-                    System.out.println(producto);
+                lista = empleadoDAO.obtenerProductos();
+                for (Empleado empleado : lista) {
+                    System.out.println(empleado);
                 }
 
                 request.setAttribute("lista", lista);
@@ -68,10 +68,10 @@ public class ProductoController extends HttpServlet {
         } else if (opcion.equals("meditar")) {
             int id = Integer.parseInt(request.getParameter("id"));
             System.out.println("Editar id: " + id);
-            ProductoDAO productoDAO = new ProductoDAO();
-            Producto p = new Producto();
+            EmpleadoDAO empleadoDAO = new EmpleadoDAO();
+            Empleado p = new Empleado();
             try {
-                p = productoDAO.obtenerProducto(id);
+                p = empleadoDAO.obtenerProducto(id);
                 System.out.println(p);
                 request.setAttribute("producto", p);
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/editar.jsp");
@@ -83,10 +83,10 @@ public class ProductoController extends HttpServlet {
             }
 
         } else if (opcion.equals("eliminar")) {
-            ProductoDAO productoDAO = new ProductoDAO();
+            EmpleadoDAO empleadoDAO = new EmpleadoDAO();
             int id = Integer.parseInt(request.getParameter("id"));
             try {
-                productoDAO.eliminar(id);
+                empleadoDAO.eliminar(id);
                 System.out.println("Registro eliminado satisfactoriamente...");
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("/index.jsp");
                 requestDispatcher.forward(request, response);
@@ -110,14 +110,14 @@ public class ProductoController extends HttpServlet {
         Date fechaActual = new Date();
 
         if (opcion.equals("guardar")) {
-            ProductoDAO productoDAO = new ProductoDAO();
-            Producto producto = new Producto();
-            producto.setNombre(request.getParameter("nombre"));
-            producto.setSexo(request.getParameter("sexo"));
-            producto.setCategoria(Integer.parseInt(request.getParameter("categoria")));
-            producto.setAnyos(Integer.parseInt(request.getParameter("anyos")));
+            EmpleadoDAO empleadoDAO = new EmpleadoDAO();
+            Empleado empleado = new Empleado();
+            empleado.setNombre(request.getParameter("nombre"));
+            empleado.setSexo(request.getParameter("sexo"));
+            empleado.setCategoria(Integer.parseInt(request.getParameter("categoria")));
+            empleado.setAnyos(Integer.parseInt(request.getParameter("anyos")));
             try {
-                productoDAO.guardar(producto);
+                empleadoDAO.guardar(empleado);
                 System.out.println("Registro guardado satisfactoriamente...");
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("/index.jsp");
                 requestDispatcher.forward(request, response);
@@ -127,16 +127,16 @@ public class ProductoController extends HttpServlet {
                 e.printStackTrace();
             }
         } else if (opcion.equals("editar")) {
-            Producto producto = new Producto();
-            ProductoDAO productoDAO = new ProductoDAO();
+            Empleado empleado = new Empleado();
+            EmpleadoDAO empleadoDAO = new EmpleadoDAO();
 
-            producto.setDni(request.getParameter("dni"));
-            producto.setNombre(request.getParameter("nombre"));
-            producto.setSexo(request.getParameter("sexo"));
-            producto.setCategoria(Integer.parseInt(request.getParameter("categoria")));
-            producto.setAnyos(Integer.parseInt(request.getParameter("anyos")));
+            empleado.setDni(request.getParameter("dni"));
+            empleado.setNombre(request.getParameter("nombre"));
+            empleado.setSexo(request.getParameter("sexo"));
+            empleado.setCategoria(Integer.parseInt(request.getParameter("categoria")));
+            empleado.setAnyos(Integer.parseInt(request.getParameter("anyos")));
             try {
-                productoDAO.editar(producto);
+                empleadoDAO.editar(empleado);
                 System.out.println("Registro editado satisfactoriamente...");
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("/index.jsp");
                 requestDispatcher.forward(request, response);
