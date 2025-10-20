@@ -21,7 +21,7 @@
     <c:forEach var="empleado" items="${lista}">
         <tr>
             <td>
-                <a href="productos?opcion=meditar&id=<c:out value="${ empleado.dni}"></c:out>">
+                <a href="empleados?opcion=meditar&id=<c:out value="${ empleado.dni}"></c:out>">
                     <c:out value="${ empleado.dni}"></c:out>
                 </a>
             </td>
@@ -30,7 +30,7 @@
             <td><c:out value="${ empleado.categoria}"></c:out></td>
             <td><c:out value="${ empleado.anyos}"></c:out></td>
             <td>
-                <a href="productos?opcion=eliminar&id=<c:out value="${ empleado.dni}"></c:out>">
+                <a href="empleados?opcion=eliminar&id=<c:out value="${ empleado.dni}"></c:out>">
                     Eliminar
                 </a>
             </td>

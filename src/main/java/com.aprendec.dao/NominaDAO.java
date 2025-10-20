@@ -1,5 +1,9 @@
 package com.aprendec.dao;
 
+import com.aprendec.conexion.Conexion;
+import com.aprendec.model.Empleado;
+import com.aprendec.model.Nomina;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,30 +11,24 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.aprendec.conexion.Conexion;
-import com.aprendec.model.Empleado;
-
-public class EmpleadoDAO {
+public class NominaDAO {
     private Connection connection;
     private PreparedStatement statement;
     private boolean estadoOperacion;
 
     // guardar producto
-    public boolean guardar(Empleado empleado) throws SQLException {
+    public boolean guardar(Nomina nomina) throws SQLException {
         String sql = null;
         estadoOperacion = false;
         connection = obtenerConexion();
 
         try {
             connection.setAutoCommit(false);
-            sql = "INSERT INTO empleados (dni, nombre, sexo, categoria, anyos) VALUES(?,?,?,?,?)";
+            sql = "INSERT INTO nominas (dni, nomina) VALUES(?,?)";
             statement = connection.prepareStatement(sql);
 
             statement.setString(1, null);
-            statement.setString(2, empleado.getNombre());
-            statement.setString(3, empleado.getSexo());
-            statement.setInt(4, empleado.getCategoria());
-            statement.setInt(5, empleado.getAnyos());
+            statement.setInt(2, nomina.getNominas());
 
             estadoOperacion = statement.executeUpdate() > 0;
 
@@ -46,20 +44,17 @@ public class EmpleadoDAO {
     }
 
     // editar producto
-    public boolean editar(Empleado empleado) throws SQLException {
+    public boolean editar(Nomina nomina) throws SQLException {
         String sql = null;
         estadoOperacion = false;
         connection = obtenerConexion();
         try {
             connection.setAutoCommit(false);
-            sql = "UPDATE empleados SET nombre=?, sexo=?, categoria=?, anyos=? WHERE dni=?";
+            sql = "UPDATE nominas SET nomina=? WHERE dni=?";
             statement = connection.prepareStatement(sql);
 
-            statement.setString(1, empleado.getNombre());
-            statement.setString(2, empleado.getSexo());
-            statement.setInt(3, empleado.getCategoria());
-            statement.setInt(4, empleado.getAnyos());
-            statement.setString(5, empleado.getDni());
+            statement.setInt(1, nomina.getNominas());
+            statement.setString(2, nomina.getDni());
 
             estadoOperacion = statement.executeUpdate() > 0;
             connection.commit();
@@ -99,39 +94,36 @@ public class EmpleadoDAO {
     }
 
     // obtener lista de productos
-    public List<Empleado> obtenerEmpleados() throws SQLException {
+    public List<Nomina> obtenerNominas() throws SQLException {
         ResultSet resultSet = null;
-        List<Empleado> listaEmpleados = new ArrayList<>();
+        List<Nomina> listaNominas = new ArrayList<>();
 
         String sql = null;
         estadoOperacion = false;
         connection = obtenerConexion();
 
         try {
-            sql = "SELECT * FROM empleados";
+            sql = "SELECT * FROM nominas";
             statement = connection.prepareStatement(sql);
             resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
-                Empleado p = new Empleado();
+                Nomina p = new Nomina();
                 p.setDni(resultSet.getString(1));
-                p.setNombre(resultSet.getString(2));
-                p.setSexo(resultSet.getString(3));
-                p.setCategoria(resultSet.getInt(4));
-                p.setAnyos(resultSet.getInt(5));
-                listaEmpleados.add(p);
+                p.setNominas(resultSet.getInt(2));
+                listaNominas.add(p);
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return listaEmpleados;
+        return listaNominas;
     }
 
     // obtener producto
-    public Empleado obtenerEmpleado(int dni) throws SQLException {
+    public Nomina obtenerNominas(int dni) throws SQLException {
         ResultSet resultSet = null;
-        Empleado p = new Empleado();
+        Nomina p = new Nomina();
 
         String sql = null;
         estadoOperacion = false;
@@ -146,10 +138,7 @@ public class EmpleadoDAO {
 
             if (resultSet.next()) {
                 p.setDni(resultSet.getString(1));
-                p.setNombre(resultSet.getString(2));
-                p.setSexo(resultSet.getString(3));
-                p.setCategoria(resultSet.getInt(4));
-                p.setAnyos(resultSet.getInt(5));
+                p.setNominas(resultSet.getInt(2));
             }
 
         } catch (SQLException e) {

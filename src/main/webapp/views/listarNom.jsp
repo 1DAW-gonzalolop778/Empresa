@@ -14,16 +14,16 @@
         <td>Dni</td>
         <td>Nomina</td>
     </tr>
-    <c:forEach var="empleado" items="${lista}">
+    <c:forEach var="nomina" items="${lista}">
         <tr>
             <td>
-                <a href="productos?opcion=meditar&id=<c:out value="${ empleado.dni}"></c:out>">
-                    <c:out value="${ empleado.dni}"></c:out>
+                <a href="nominas?opcion=meditar&id=<c:out value="${ nomina.dni}"></c:out>">
+                    <c:out value="${ nomina.dni}"></c:out>
                 </a>
             </td>
-            <td><c:out value="${ empleado.nombre}"></c:out></td>
+            <td><c:out value="${ nomina.nomina}"></c:out></td>
             <td>
-                <a href="productos?opcion=eliminar&id=<c:out value="${ empleado.dni}"></c:out>">
+                <a href="nominas?opcion=eliminar&id=<c:out value="${ nomina.dni}"></c:out>">
                     Eliminar
                 </a>
             </td>

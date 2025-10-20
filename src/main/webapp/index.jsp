@@ -10,13 +10,13 @@
 <h1>Menu de Opciones Productos</h1>
 <table border="1">
     <tr>
-        <td><a href="productos?opcion=crear"> Crear un Producto</a></td>
+        <td><a href="empleados?opcion=crear"> Crear un Producto</a></td>
     </tr>
     <tr>
-        <td><a href="productos?opcion=listar"> Listar Empleados</a></td>
+        <td><a href="empleados?opcion=listar"> Listar Empleados</a></td>
     </tr>
     <tr>
-        <td><a href="productos?opcion=listarNom"> Listar Nominas Empleados</a></td>
+        <td><a href="nominas?opcion=listarNom"> Listar Nominas Empleados</a></td>
     </tr>
 </table>
 </body>

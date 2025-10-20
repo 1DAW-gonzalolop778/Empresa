@@ -1,10 +1,7 @@
 package com.aprendec.controller;
 
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import com.aprendec.dao.NominaDAO;
+import com.aprendec.model.Nomina;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,21 +9,23 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.aprendec.dao.EmpleadoDAO;
-import com.aprendec.model.Empleado;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Servlet implementation class ProductoController
  */
-@WebServlet(description = "administra peticiones para la tabla productos", urlPatterns = { "/empleados" })
-public class EmpleadoController extends HttpServlet {
+@WebServlet(description = "administra peticiones para la tabla productos", urlPatterns = { "/nominas" })
+public class NominaController extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public EmpleadoController() {
+    public NominaController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -47,12 +46,12 @@ public class EmpleadoController extends HttpServlet {
             requestDispatcher.forward(request, response);
         } else if (opcion.equals("listar")) {
 
-            EmpleadoDAO empleadoDAO = new EmpleadoDAO();
-            List<Empleado> lista = new ArrayList<>();
+            NominaDAO nominaDAO = new NominaDAO();
+            List<Nomina> lista = new ArrayList<>();
             try {
-                lista = empleadoDAO.obtenerEmpleados();
-                for (Empleado empleado : lista) {
-                    System.out.println(empleado);
+                lista = nominaDAO.obtenerNominas();
+                for (Nomina nomina : lista) {
+                    System.out.println(nomina);
                 }
 
                 request.setAttribute("lista", lista);
@@ -68,10 +67,10 @@ public class EmpleadoController extends HttpServlet {
         } else if (opcion.equals("meditar")) {
             int id = Integer.parseInt(request.getParameter("id"));
             System.out.println("Editar id: " + id);
-            EmpleadoDAO empleadoDAO = new EmpleadoDAO();
-            Empleado p = new Empleado();
+            NominaDAO nominaDAO = new NominaDAO();
+            Nomina p = new Nomina();
             try {
-                p = empleadoDAO.obtenerEmpleado(id);
+                p = nominaDAO.obtenerNominas(id);
                 System.out.println(p);
                 request.setAttribute("producto", p);
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/editar.jsp");
@@ -83,10 +82,10 @@ public class EmpleadoController extends HttpServlet {
             }
 
         } else if (opcion.equals("eliminar")) {
-            EmpleadoDAO empleadoDAO = new EmpleadoDAO();
+            NominaDAO nominaDAO = new NominaDAO();
             int id = Integer.parseInt(request.getParameter("id"));
             try {
-                empleadoDAO.eliminar(id);
+                nominaDAO.eliminar(id);
                 System.out.println("Registro eliminado satisfactoriamente...");
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("/index.jsp");
                 requestDispatcher.forward(request, response);
@@ -110,14 +109,11 @@ public class EmpleadoController extends HttpServlet {
         Date fechaActual = new Date();
 
         if (opcion.equals("guardar")) {
-            EmpleadoDAO empleadoDAO = new EmpleadoDAO();
-            Empleado empleado = new Empleado();
-            empleado.setNombre(request.getParameter("nombre"));
-            empleado.setSexo(request.getParameter("sexo"));
-            empleado.setCategoria(Integer.parseInt(request.getParameter("categoria")));
-            empleado.setAnyos(Integer.parseInt(request.getParameter("anyos")));
+            NominaDAO nominaDAO = new NominaDAO();
+            Nomina nomina = new Nomina();
+            nomina.setNominas(Integer.parseInt(request.getParameter("nominas")));
             try {
-                empleadoDAO.guardar(empleado);
+                nominaDAO.guardar(nomina);
                 System.out.println("Registro guardado satisfactoriamente...");
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("/index.jsp");
                 requestDispatcher.forward(request, response);
@@ -127,16 +123,13 @@ public class EmpleadoController extends HttpServlet {
                 e.printStackTrace();
             }
         } else if (opcion.equals("editar")) {
-            Empleado empleado = new Empleado();
-            EmpleadoDAO empleadoDAO = new EmpleadoDAO();
+            Nomina nomina = new Nomina();
+            NominaDAO nominaDAO = new NominaDAO();
 
-            empleado.setDni(request.getParameter("dni"));
-            empleado.setNombre(request.getParameter("nombre"));
-            empleado.setSexo(request.getParameter("sexo"));
-            empleado.setCategoria(Integer.parseInt(request.getParameter("categoria")));
-            empleado.setAnyos(Integer.parseInt(request.getParameter("anyos")));
+            nomina.setDni(request.getParameter("dni"));
+            nomina.setNominas(Integer.parseInt(request.getParameter("nominas")));
             try {
-                empleadoDAO.editar(empleado);
+                nominaDAO.editar(nomina);
                 System.out.println("Registro editado satisfactoriamente...");
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("/index.jsp");
                 requestDispatcher.forward(request, response);
