@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * Servlet implementation class ProductoController
  */
-@WebServlet(description = "administra peticiones para la tabla productos", urlPatterns = { "/nominas" })
+@WebServlet(description = "administra peticiones para la tabla nominas", urlPatterns = { "/nominas" })
 public class NominaController extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -44,7 +44,7 @@ public class NominaController extends HttpServlet {
             System.out.println("Usted a presionado la opcion crear");
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/crear.jsp");
             requestDispatcher.forward(request, response);
-        } else if (opcion.equals("listar")) {
+        } else if (opcion.equals("listarNom")) {
 
             NominaDAO nominaDAO = new NominaDAO();
             List<Nomina> lista = new ArrayList<>();
@@ -55,7 +55,7 @@ public class NominaController extends HttpServlet {
                 }
 
                 request.setAttribute("lista", lista);
-                RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/listar.jsp");
+                RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/listarNom.jsp");
                 requestDispatcher.forward(request, response);
 
             } catch (SQLException e) {
