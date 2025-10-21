@@ -93,24 +93,28 @@ public class NominaDAO {
         return estadoOperacion;
     }
 
-    // obtener lista de productos
-    public List<Nomina> obtenerNominas() throws SQLException {
+    // obtener lista de nominas
+    public List<Nomina> obtenerNominas(String dni) throws SQLException {
         ResultSet resultSet = null;
         List<Nomina> listaNominas = new ArrayList<>();
 
         String sql = null;
         estadoOperacion = false;
         connection = obtenerConexion();
-
+        resultSet = null;
         try {
-            sql = "SELECT * FROM nominas";
+            sql = "SELECT * FROM nominas WHERE dni= ?";
+            System.out.println("Me meto aqui y el dni es " + dni);
             statement = connection.prepareStatement(sql);
-            resultSet = statement.executeQuery(sql);
+            statement.setString(1, dni);
+            //me peta la linea de justo abajo
+            resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 Nomina p = new Nomina();
                 p.setDni(resultSet.getString(1));
                 p.setNominas(resultSet.getInt(2));
                 listaNominas.add(p);
+                System.out.println(listaNominas);
             }
 
         } catch (SQLException e) {

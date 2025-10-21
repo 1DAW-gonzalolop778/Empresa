@@ -16,8 +16,9 @@
         <td><a href="empleados?opcion=listar"> Listar Empleados</a></td>
     </tr>
     <tr>
-        <td><a href="nominas?opcion=listarNom"> Listar Nominas Empleados</a></td>
+        <td><a href="nominas?opcion=buscar"> Buscar Nomina</a></td>
     </tr>
+
 </table>
 </body>
 </html>

@@ -21,6 +21,7 @@ import java.util.List;
 @WebServlet(description = "administra peticiones para la tabla nominas", urlPatterns = { "/nominas" })
 public class NominaController extends HttpServlet {
     private static final long serialVersionUID = 1L;
+    String dni;
 
     /**
      * @see HttpServlet#HttpServlet()
@@ -40,16 +41,17 @@ public class NominaController extends HttpServlet {
 
         String opcion = request.getParameter("opcion");
 
-        if (opcion.equals("crear")) {
-            System.out.println("Usted a presionado la opcion crear");
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/crear.jsp");
+        if (opcion.equals("buscar")) {
+            System.out.println("Usted a presionado la opcion buscar");
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/buscar.jsp");
             requestDispatcher.forward(request, response);
         } else if (opcion.equals("listarNom")) {
-
+            //no se mete aqui, averiguar porque
+            System.out.println("Me he metido en listarNom");
             NominaDAO nominaDAO = new NominaDAO();
             List<Nomina> lista = new ArrayList<>();
             try {
-                lista = nominaDAO.obtenerNominas();
+                lista = nominaDAO.obtenerNominas(dni);
                 for (Nomina nomina : lista) {
                     System.out.println(nomina);
                 }
@@ -72,7 +74,7 @@ public class NominaController extends HttpServlet {
             try {
                 p = nominaDAO.obtenerNominas(id);
                 System.out.println(p);
-                request.setAttribute("producto", p);
+                request.setAttribute("nomina", p);
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/editar.jsp");
                 requestDispatcher.forward(request, response);
 
@@ -87,7 +89,7 @@ public class NominaController extends HttpServlet {
             try {
                 nominaDAO.eliminar(id);
                 System.out.println("Registro eliminado satisfactoriamente...");
-                RequestDispatcher requestDispatcher = request.getRequestDispatcher("/index.jsp");
+                RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/listarNom.jsp");
                 requestDispatcher.forward(request, response);
             } catch (SQLException e) {
                 // TODO Auto-generated catch block
@@ -108,14 +110,16 @@ public class NominaController extends HttpServlet {
         String opcion = request.getParameter("opcion");
         Date fechaActual = new Date();
 
-        if (opcion.equals("guardar")) {
+        if (opcion.equals("buscarNom")) {
+            System.out.println("Me he metido en buscarNom");
             NominaDAO nominaDAO = new NominaDAO();
             Nomina nomina = new Nomina();
-            nomina.setNominas(Integer.parseInt(request.getParameter("nominas")));
+            dni = request.getParameter("dni");
+            //nomina.setNominas(Integer.parseInt(request.getParameter("nominas")));
             try {
-                nominaDAO.guardar(nomina);
+                nominaDAO.obtenerNominas(dni);
                 System.out.println("Registro guardado satisfactoriamente...");
-                RequestDispatcher requestDispatcher = request.getRequestDispatcher("/index.jsp");
+                RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/listarNom.jsp");
                 requestDispatcher.forward(request, response);
 
             } catch (SQLException e) {
