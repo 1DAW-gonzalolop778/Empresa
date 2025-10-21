@@ -111,7 +111,13 @@ public class NominaController extends HttpServlet {
         Date fechaActual = new Date();
 
         if (opcion.equals("buscarNom")) {
-            System.out.println("Me he metido en buscarNom");
+
+            dni = request.getParameter("dni");
+            response.sendRedirect("nominas?opcion=listarNom");
+            //el error estaba en que hacia dos veces lo mismo
+            //Lo he solucionado en vez de mandando otro request llamando directamente a listarNom
+
+            /*System.out.println("Me he metido en buscarNom");
             NominaDAO nominaDAO = new NominaDAO();
             Nomina nomina = new Nomina();
             dni = request.getParameter("dni");
@@ -125,7 +131,7 @@ public class NominaController extends HttpServlet {
             } catch (SQLException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
-            }
+            }*/
         } else if (opcion.equals("editar")) {
             Nomina nomina = new Nomina();
             NominaDAO nominaDAO = new NominaDAO();
