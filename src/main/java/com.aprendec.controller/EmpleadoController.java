@@ -17,9 +17,9 @@ import com.aprendec.dao.EmpleadoDAO;
 import com.aprendec.model.Empleado;
 
 /**
- * Servlet implementation class ProductoController
+ * Servlet implementation class EmpleadoController
  */
-@WebServlet(description = "administra peticiones para la tabla productos", urlPatterns = { "/empleados" })
+@WebServlet(description = "administra peticiones para la tabla empleados", urlPatterns = { "/empleados" })
 public class EmpleadoController extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -66,14 +66,14 @@ public class EmpleadoController extends HttpServlet {
 
             System.out.println("Usted a presionado la opcion listar");
         } else if (opcion.equals("meditar")) {
-            int id = Integer.parseInt(request.getParameter("id"));
-            System.out.println("Editar id: " + id);
+            String dni = request.getParameter("dni");
+            System.out.println("Editar dni: " + dni);
             EmpleadoDAO empleadoDAO = new EmpleadoDAO();
-            Empleado p = new Empleado();
+            Empleado emp = new Empleado();
             try {
-                p = empleadoDAO.obtenerEmpleado(id);
-                System.out.println(p);
-                request.setAttribute("producto", p);
+                emp = empleadoDAO.obtenerEmpleado(dni);
+                System.out.println(emp);
+                request.setAttribute("empleado", emp);
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/editar.jsp");
                 requestDispatcher.forward(request, response);
 
@@ -107,7 +107,7 @@ public class EmpleadoController extends HttpServlet {
             throws ServletException, IOException {
         // TODO Auto-generated method stub
         String opcion = request.getParameter("opcion");
-        Date fechaActual = new Date();
+
 
         if (opcion.equals("guardar")) {
             EmpleadoDAO empleadoDAO = new EmpleadoDAO();

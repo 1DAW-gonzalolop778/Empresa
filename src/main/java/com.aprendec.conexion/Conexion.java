@@ -19,7 +19,7 @@ public class Conexion {
             dataSource.setPassword("usuario");
             //cambia la base de datos a gestiondeempleados para trabajar en clase
             //cambia la base de datos a gestion_nominas para tabajar en casa
-            dataSource.setUrl("jdbc:mysql://localhost:3306/gestion_nominas");
+            dataSource.setUrl("jdbc:mysql://localhost:3306/gestiondeempleados");
             dataSource.setInitialSize(20);
             dataSource.setMaxIdle(15);
             dataSource.setMaxTotal(20);
