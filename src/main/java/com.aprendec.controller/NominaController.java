@@ -151,6 +151,11 @@ public class NominaController extends HttpServlet {
                 e.printStackTrace();
             }
         }
+        else if (opcion.equals("PaginaAnterior")) {
+            System.out.println("Vuelvo a la pagina anterior");
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/buscar.jsp");
+            requestDispatcher.forward(request, response);
+        }
 
         // doGet(request, response);
     }

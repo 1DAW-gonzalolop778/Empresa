@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.SortedMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -96,6 +97,13 @@ public class EmpleadoController extends HttpServlet {
             }
 
         }
+        else if (opcion.equals("buscar")) {
+            System.out.println("Buscar empleado");
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/buscarEmpleado.jsp");
+            requestDispatcher.forward(request, response);
+        }
+
+
         // response.getWriter().append("Served at: ").append(request.getContextPath());
     }
 
@@ -145,6 +153,43 @@ public class EmpleadoController extends HttpServlet {
                 e.printStackTrace();
             }
         }
+        else if (opcion.equals("buscarEmpleado")) {
+            String criterio = request.getParameter("criterio");
+            String valor = request.getParameter("valor");
+
+            EmpleadoDAO empleadoDAO = new EmpleadoDAO();
+            List<Empleado> lista = new ArrayList<>();
+
+            try {
+                lista = empleadoDAO.buscarEmpleado(criterio, valor);
+                if (lista.isEmpty()) {
+                    request.setAttribute("mensaje", "No ha puesto ningun criterio");
+                    RequestDispatcher rd = request.getRequestDispatcher("/views/buscarEmpleado.jsp");
+                    rd.forward(request, response);
+                } else if (lista.size() == 1) {
+                    request.setAttribute("empleado", lista.get(0));
+                    RequestDispatcher rd = request.getRequestDispatcher("/views/editar.jsp");
+                    rd.forward(request, response);
+                } else {
+                    request.setAttribute("mensaje", "Se han encontrado varios empleados con ese mismo dato. Use un criterio más específico para la búsqueda.");
+                    RequestDispatcher rd = request.getRequestDispatcher("/views/buscarEmpleado.jsp");
+                    rd.forward(request, response);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        else if (opcion.equals("Volver")) {
+            System.out.println("Vuelvo a menu principal");
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("/index.jsp");
+            requestDispatcher.forward(request, response);
+        }
+        else if (opcion.equals("PaginaAnterior")) {
+            System.out.println("Vuelvo a la pagina anterior");
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/buscarEmpleado.jsp");
+            requestDispatcher.forward(request, response);
+        }
+
 
         // doGet(request, response);
     }

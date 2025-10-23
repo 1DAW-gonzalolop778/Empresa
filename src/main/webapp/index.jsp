@@ -7,17 +7,23 @@
     <title>Menú de Opciones</title>
 </head>
 <body>
-<h1>Menu de Opciones Productos</h1>
+<h1>Menu de Opciones</h1>
 <table border="1">
+    <!--
     <tr>
         <td><a href="empleados?opcion=crear"> Crear un Producto</a></td>
     </tr>
+    -->
     <tr>
         <td><a href="empleados?opcion=listar"> Listar Empleados</a></td>
     </tr>
     <tr>
         <td><a href="nominas?opcion=buscar"> Buscar Nomina</a></td>
     </tr>
+    <tr>
+        <td><a href="empleados?opcion=buscar"> Editar Empleado</a></td>
+    </tr>
+
 
 </table>
 </body>

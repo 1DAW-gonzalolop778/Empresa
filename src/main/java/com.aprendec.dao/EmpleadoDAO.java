@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.aprendec.conexion.Conexion;
+import com.aprendec.model.CalcNomina;
 import com.aprendec.model.Empleado;
 
 public class EmpleadoDAO {
@@ -63,6 +64,18 @@ public class EmpleadoDAO {
 
             System.out.println("ESTOY EN EDITAR");
             estadoOperacion = statement.executeUpdate() > 0;
+
+            //editar la nomina
+            double nuevaNomina = CalcNomina.sueldo(empleado);
+
+            //sueldo en casa, nomina en el instituto
+            sql = "UPDATE nominas SET sueldo=? WHERE dni=?";
+            statement = connection.prepareStatement(sql);
+            statement.setDouble(1, nuevaNomina);
+            statement.setString(2, empleado.getDni());
+            statement.executeUpdate();
+
+
             connection.commit();
             System.out.println("Listo");
             statement.close();
@@ -160,6 +173,62 @@ public class EmpleadoDAO {
 
         return emp;
     }
+
+    public List<Empleado> buscarEmpleado(String criterio, String valor) throws SQLException {
+        ResultSet resultSet = null;
+        List<Empleado> listaEmpleados = new ArrayList<>();
+
+        String sql = null;
+        connection = obtenerConexion();
+
+        try {
+            switch (criterio) {
+                case "dni":
+                    sql = "SELECT * FROM empleados WHERE dni = ?";
+                    break;
+                case "nombre":
+                    sql = "SELECT * FROM empleados WHERE nombre LIKE ?";
+                    valor = "%" + valor + "%";
+                    //esta con % para que no tengas que escribir nombre y apellidos y solo baste con nombre o apellido
+                    break;
+                case "sexo":
+                    sql = "SELECT * FROM empleados WHERE sexo = ?";
+                    break;
+                case "categoria":
+                    sql = "SELECT * FROM empleados WHERE categoria = ?";
+                    break;
+                case "anyos":
+                    sql = "SELECT * FROM empleados WHERE anyos = ?";
+                    break;
+            }
+
+            PreparedStatement ps = connection.prepareStatement(sql);
+
+            if (criterio.equals("categoria") || criterio.equals("anyos")) {
+                ps.setInt(1, Integer.parseInt(valor));
+            } else {
+                ps.setString(1, valor);
+            }
+
+            resultSet = ps.executeQuery();
+
+            while (resultSet.next()) {
+                Empleado e = new Empleado();
+                e.setDni(resultSet.getString(1));
+                e.setNombre(resultSet.getString(2));
+                e.setSexo(resultSet.getString(3));
+                e.setCategoria(resultSet.getInt(4));
+                e.setAnyos(resultSet.getInt(5));
+                listaEmpleados.add(e);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return listaEmpleados;
+    }
+
 
     // obtener conexion pool
     private Connection obtenerConexion() throws SQLException {

@@ -17,6 +17,10 @@
         </tr>
     </table>
     <input type="submit" value="buscarNom">
+
+</form>
+<form action="empleados" method="post">
+    <input type="submit" name="opcion" value="Volver">
 </form>
 </body>
 </html>

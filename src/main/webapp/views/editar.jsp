@@ -33,5 +33,14 @@
     </table>
     <input type="submit" value="Guardar">
 </form>
+
+<form action="empleados" method="post">
+    <input type="submit" name="opcion" value="PaginaAnterior">
+</form>
+
+<form action="empleados" method="post">
+    <input type="submit" name="opcion" value="Volver">
+</form>
+
 </body>
 </html>

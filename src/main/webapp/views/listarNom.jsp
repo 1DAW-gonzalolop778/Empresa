@@ -18,19 +18,19 @@
     </tr>
     <c:forEach var="nomina" items="${lista}">
         <tr>
-            <td>
-                <a href="nominas?opcion=meditar&id=<c:out value="${ nomina.dni}"></c:out>">
-                    <c:out value="${ nomina.dni}"></c:out>
-                </a>
-            </td>
+            <td><c:out value="${ nomina.dni}"></c:out></td>
             <td><c:out value="${ nomina.nominas}"></c:out></td>
-            <td>
-                <a href="nominas?opcion=eliminar&id=<c:out value="${ nomina.dni}"></c:out>">
-                    Eliminar
-                </a>
-            </td>
         </tr>
     </c:forEach>
 </table>
+
+<form action="nominas" method="post">
+    <input type="submit" name="opcion" value="PaginaAnterior">
+</form>
+
+<form action="empleados" method="post">
+    <input type="submit" name="opcion" value="Volver">
+</form>
+
 </body>
 </html>
