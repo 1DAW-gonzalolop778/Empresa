@@ -144,10 +144,16 @@ public class EmpleadoController extends HttpServlet {
             empleado.setCategoria(Integer.parseInt(request.getParameter("categoria")));
             empleado.setAnyos(Integer.parseInt(request.getParameter("anyos")));
             try {
-                empleadoDAO.editar(empleado);
-                System.out.println("Registro editado satisfactoriamente...");
-                RequestDispatcher requestDispatcher = request.getRequestDispatcher("/index.jsp");
-                requestDispatcher.forward(request, response);
+                if(empleado.getAnyos() <= 0 || empleado.getAnyos() >= 10 || empleado.getCategoria() <= 0 || empleado.getCategoria() >= 10 ){
+                    request.setAttribute("mensaje", "Categoria o años deben estas entre 1 y 10");
+                    RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
+                    rd.forward(request, response);
+                }else{
+                    empleadoDAO.editar(empleado);
+                    System.out.println("Registro editado satisfactoriamente...");
+                    RequestDispatcher requestDispatcher = request.getRequestDispatcher("/index.jsp");
+                    requestDispatcher.forward(request, response);
+                }
             } catch (SQLException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();

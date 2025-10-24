@@ -69,7 +69,7 @@ public class EmpleadoDAO {
             double nuevaNomina = CalcNomina.sueldo(empleado);
 
             //sueldo en casa, nomina en el instituto
-            sql = "UPDATE nominas SET sueldo=? WHERE dni=?";
+            sql = "UPDATE nominas SET nomina=? WHERE dni=?";
             statement = connection.prepareStatement(sql);
             statement.setDouble(1, nuevaNomina);
             statement.setString(2, empleado.getDni());
