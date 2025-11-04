@@ -11,106 +11,57 @@ import com.aprendec.conexion.Conexion;
 import com.aprendec.model.CalcNomina;
 import com.aprendec.model.Empleado;
 
-public class EmpleadoDAO {
+public class EmpleadoDAO extends AbstractDAO<Empleado>{
     private Connection connection;
     private PreparedStatement statement;
     private boolean estadoOperacion;
 
-    // guardar producto
-    public boolean guardar(Empleado empleado) throws SQLException {
+    @Override
+    protected boolean ejecutarGuardar(Empleado empleado) throws SQLException {
+        String sql = "INSERT INTO empleados (dni, nombre, sexo, categoria, anyos) VALUES(?,?,?,?,?)";
+        statement = connection.prepareStatement(sql);
+        statement.setString(1, empleado.getDni());
+        statement.setString(2, empleado.getNombre());
+        statement.setString(3, empleado.getSexo());
+        statement.setInt(4, empleado.getCategoria());
+        statement.setInt(5, empleado.getAnyos());
+        return statement.executeUpdate() > 0;
+    }
+
+    @Override
+    public boolean ejecutarEditar(Empleado empleado) throws SQLException {
         String sql = null;
-        estadoOperacion = false;
-        connection = obtenerConexion();
+        sql = "UPDATE empleados SET nombre=?, sexo=?, categoria=?, anyos=? WHERE dni=?";
+        statement = connection.prepareStatement(sql);
 
-        try {
-            connection.setAutoCommit(false);
-            sql = "INSERT INTO empleados (dni, nombre, sexo, categoria, anyos) VALUES(?,?,?,?,?)";
-            statement = connection.prepareStatement(sql);
+        statement.setString(1, empleado.getNombre());
+        statement.setString(2, empleado.getSexo());
+        statement.setInt(3, empleado.getCategoria());
+        statement.setInt(4, empleado.getAnyos());
+        statement.setString(5, empleado.getDni());
 
-            statement.setString(1, empleado.getDni());
-            statement.setString(2, empleado.getNombre());
-            statement.setString(3, empleado.getSexo());
-            statement.setInt(4, empleado.getCategoria());
-            statement.setInt(5, empleado.getAnyos());
+        System.out.println("ESTOY EN EDITAR");
+        estadoOperacion = statement.executeUpdate() > 0;
 
-            estadoOperacion = statement.executeUpdate() > 0;
+        //editar la nomina
+        double nuevaNomina = CalcNomina.sueldo(empleado);
 
-            connection.commit();
-            statement.close();
-            connection.close();
-        } catch (SQLException e) {
-            connection.rollback();
-            e.printStackTrace();
-        }
+        //sueldo en casa, nomina en el instituto
+        sql = "UPDATE nominas SET nomina=? WHERE dni=?";
+        statement = connection.prepareStatement(sql);
+        statement.setDouble(1, nuevaNomina);
+        statement.setString(2, empleado.getDni());
+        statement.executeUpdate();
 
         return estadoOperacion;
     }
 
-    // editar producto
-    public boolean editar(Empleado empleado) throws SQLException {
-        String sql = null;
-        estadoOperacion = false;
-        connection = obtenerConexion();
-        try {
-            connection.setAutoCommit(false);
-            sql = "UPDATE empleados SET nombre=?, sexo=?, categoria=?, anyos=? WHERE dni=?";
-            statement = connection.prepareStatement(sql);
-
-            statement.setString(1, empleado.getNombre());
-            statement.setString(2, empleado.getSexo());
-            statement.setInt(3, empleado.getCategoria());
-            statement.setInt(4, empleado.getAnyos());
-            statement.setString(5, empleado.getDni());
-
-            System.out.println("ESTOY EN EDITAR");
-            estadoOperacion = statement.executeUpdate() > 0;
-
-            //editar la nomina
-            double nuevaNomina = CalcNomina.sueldo(empleado);
-
-            //sueldo en casa, nomina en el instituto
-            sql = "UPDATE nominas SET nomina=? WHERE dni=?";
-            statement = connection.prepareStatement(sql);
-            statement.setDouble(1, nuevaNomina);
-            statement.setString(2, empleado.getDni());
-            statement.executeUpdate();
-
-
-            connection.commit();
-            System.out.println("Listo");
-            statement.close();
-            connection.close();
-
-        } catch (SQLException e) {
-            connection.rollback();
-            e.printStackTrace();
-        }
-
-        return estadoOperacion;
-    }
-
-    // eliminar producto
-    public boolean eliminar(int dni) throws SQLException {
-        String sql = null;
-        estadoOperacion = false;
-        connection = obtenerConexion();
-        try {
-            connection.setAutoCommit(false);
-            sql = "DELETE FROM empleados WHERE dni=?";
-            statement = connection.prepareStatement(sql);
-            statement.setInt(1, dni);
-
-            estadoOperacion = statement.executeUpdate() > 0;
-            connection.commit();
-            statement.close();
-            connection.close();
-
-        } catch (SQLException e) {
-            connection.rollback();
-            e.printStackTrace();
-        }
-
-        return estadoOperacion;
+    @Override
+    protected boolean ejecutarEliminar(Object dni) throws SQLException {
+        String sql = "DELETE FROM empleados WHERE dni=?";
+        statement = connection.prepareStatement(sql);
+        statement.setString(1, dni.toString());
+        return statement.executeUpdate() > 0;
     }
 
     // obtener lista de productos

@@ -70,7 +70,7 @@
     <div>
         <div class="boton"><a href="empleados?opcion=listar"> LISTAR EMPLEADOS</a></div>
         <br>
-        <div class="boton"><a href="nominas?opcion=buscar"> BUSCAR NOMINAS</a></div>
+        <div class="boton"><a href="empleados?opcion=buscarNom"> BUSCAR NOMINAS</a></div>
         <br>
         <div class="boton"><a href="empleados?opcion=buscar"> EDITAR EMPLEADOS</a></div>
 

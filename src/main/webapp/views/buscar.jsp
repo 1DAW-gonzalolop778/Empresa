@@ -101,8 +101,8 @@
 <body>
 <div class = "c1">
     <h1>BUSCAR NOMINA</h1>
-    <form action="nominas" method="post">
-        <input type="hidden" name="opcion" value="buscarNom">
+    <form action="empleados" method="post">
+        <input type="hidden" name="opcion" value="buscarNomina">
         <table>
             <tr>
                 <td>DNI:</td>

@@ -11,7 +11,12 @@ import org.apache.commons.dbcp2.BasicDataSource;
 public class Conexion {
     private static BasicDataSource dataSource = null;
 
+    //Esta clase implementa un patron Singleton sin que yo me hubiera dado cuenta
+    //Singleton hace que solo exista una unica instancia de clase durante la ejecución del programa
+    //Al usar el static en DataSource significa que solo habrá una copia compartida por toda la app
+
     private static DataSource getDataSource() {
+        //Con este if se asegura que la primera vez se cree una instancia y las siguientes devuelva la misma instancia
         if (dataSource == null) {
             dataSource = new BasicDataSource();
             dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");

@@ -16,13 +16,20 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.aprendec.dao.EmpleadoDAO;
 import com.aprendec.model.Empleado;
+import com.aprendec.dao.NominaDAO;
+import com.aprendec.model.Nomina;
 
 /**
  * Servlet implementation class EmpleadoController
  */
+
+//He pasado de tener dos controller a solo uno:
+//He quitado el NominaController pasando todos sus metodos a este controller
+//De este modo he implementado el patron FrontController
 @WebServlet(description = "administra peticiones para la tabla empleados", urlPatterns = { "/empleados" })
 public class EmpleadoController extends HttpServlet {
     private static final long serialVersionUID = 1L;
+    String dni;
 
     /**
      * @see HttpServlet#HttpServlet()
@@ -101,6 +108,31 @@ public class EmpleadoController extends HttpServlet {
             System.out.println("Buscar empleado");
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/buscarEmpleado.jsp");
             requestDispatcher.forward(request, response);
+        }else if (opcion.equals("buscarNom")) {
+            System.out.println("Usted a presionado la opcion buscar");
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/buscar.jsp");
+            requestDispatcher.forward(request, response);
+        }else if (opcion.equals("listarNom")) {
+            //no se mete aqui, averiguar porque
+            System.out.println("Me he metido en listarNom");
+            NominaDAO nominaDAO = new NominaDAO();
+            List<Nomina> lista = new ArrayList<>();
+            try {
+                lista = nominaDAO.obtenerNominas(dni);
+                for (Nomina nomina : lista) {
+                    System.out.println(nomina);
+                }
+
+                request.setAttribute("lista", lista);
+                RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/listarNom.jsp");
+                requestDispatcher.forward(request, response);
+
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+            System.out.println("Usted a presionado la opcion listar");
         }
 
 
@@ -193,6 +225,15 @@ public class EmpleadoController extends HttpServlet {
         else if (opcion.equals("PaginaAnterior")) {
             System.out.println("Vuelvo a la pagina anterior");
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/buscarEmpleado.jsp");
+            requestDispatcher.forward(request, response);
+        }else if (opcion.equals("buscarNomina")) {
+
+            dni = request.getParameter("dni");
+            response.sendRedirect("empleados?opcion=listarNom");
+
+        }else if (opcion.equals("PaginaAnterior2")) {
+            System.out.println("Vuelvo a la pagina anterior");
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/buscar.jsp");
             requestDispatcher.forward(request, response);
         }
 

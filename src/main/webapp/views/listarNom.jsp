@@ -125,8 +125,8 @@
         </c:forEach>
     </table>
 
-    <form action="nominas" method="post">
-        <button type="submit" name="opcion" value="PaginaAnterior">Pagina Anterior</button>
+    <form action="empleados" method="post">
+        <button type="submit" name="opcion" value="PaginaAnterior2">Pagina Anterior</button>
     </form>
 
     <form action="empleados" method="post">
