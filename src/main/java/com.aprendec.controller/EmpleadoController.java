@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.aprendec.dao.DAOFactory;
 import com.aprendec.dao.EmpleadoDAO;
 import com.aprendec.model.Empleado;
 import com.aprendec.dao.NominaDAO;
@@ -55,7 +56,8 @@ public class EmpleadoController extends HttpServlet {
             requestDispatcher.forward(request, response);
         } else if (opcion.equals("listar")) {
 
-            EmpleadoDAO empleadoDAO = new EmpleadoDAO();
+            EmpleadoDAO empleadoDAO = (EmpleadoDAO) DAOFactory.getDAO("empleado");
+
             List<Empleado> lista = new ArrayList<>();
             try {
                 lista = empleadoDAO.obtenerEmpleados();
@@ -76,7 +78,7 @@ public class EmpleadoController extends HttpServlet {
         } else if (opcion.equals("meditar")) {
             String dni = request.getParameter("dni");
             System.out.println("Editar dni: " + dni);
-            EmpleadoDAO empleadoDAO = new EmpleadoDAO();
+            EmpleadoDAO empleadoDAO = (EmpleadoDAO) DAOFactory.getDAO("empleado");
             Empleado emp = new Empleado();
             try {
                 emp = empleadoDAO.obtenerEmpleado(dni);
@@ -91,7 +93,7 @@ public class EmpleadoController extends HttpServlet {
             }
 
         } else if (opcion.equals("eliminar")) {
-            EmpleadoDAO empleadoDAO = new EmpleadoDAO();
+            EmpleadoDAO empleadoDAO = (EmpleadoDAO) DAOFactory.getDAO("empleado");
             int id = Integer.parseInt(request.getParameter("id"));
             try {
                 empleadoDAO.eliminar(id);
@@ -115,7 +117,7 @@ public class EmpleadoController extends HttpServlet {
         }else if (opcion.equals("listarNom")) {
             //no se mete aqui, averiguar porque
             System.out.println("Me he metido en listarNom");
-            NominaDAO nominaDAO = new NominaDAO();
+            NominaDAO nominaDAO = (NominaDAO) DAOFactory.getDAO("nomina");
             List<Nomina> lista = new ArrayList<>();
             try {
                 lista = nominaDAO.obtenerNominas(dni);
@@ -150,7 +152,7 @@ public class EmpleadoController extends HttpServlet {
 
 
         if (opcion.equals("guardar")) {
-            EmpleadoDAO empleadoDAO = new EmpleadoDAO();
+            EmpleadoDAO empleadoDAO = (EmpleadoDAO) DAOFactory.getDAO("empleado");
             Empleado empleado = new Empleado();
             empleado.setNombre(request.getParameter("nombre"));
             empleado.setSexo(request.getParameter("sexo"));
@@ -168,7 +170,7 @@ public class EmpleadoController extends HttpServlet {
             }
         } else if (opcion.equals("editar")) {
             Empleado empleado = new Empleado();
-            EmpleadoDAO empleadoDAO = new EmpleadoDAO();
+            EmpleadoDAO empleadoDAO = (EmpleadoDAO) DAOFactory.getDAO("empleado");
 
             empleado.setDni(request.getParameter("dni"));
             empleado.setNombre(request.getParameter("nombre"));
@@ -195,7 +197,7 @@ public class EmpleadoController extends HttpServlet {
             String criterio = request.getParameter("criterio");
             String valor = request.getParameter("valor");
 
-            EmpleadoDAO empleadoDAO = new EmpleadoDAO();
+            EmpleadoDAO empleadoDAO = (EmpleadoDAO) DAOFactory.getDAO("empleado");
             List<Empleado> lista = new ArrayList<>();
 
             try {
