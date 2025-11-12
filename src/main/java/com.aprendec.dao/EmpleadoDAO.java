@@ -12,7 +12,7 @@ import com.aprendec.model.CalcNomina;
 import com.aprendec.model.Empleado;
 
 public class EmpleadoDAO extends AbstractDAO<Empleado>{
-    private Connection connection;
+    //private Connection connection;
     private PreparedStatement statement;
     private boolean estadoOperacion;
 

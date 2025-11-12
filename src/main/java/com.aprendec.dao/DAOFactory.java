@@ -1,9 +1,9 @@
 package com.aprendec.dao;
 
-/**
- * Factory Method
- * Con esto el controlador pide un DAO a esta clase sin saber internamente si usa EmpleadoDAO o NominaDAO
- * Si se cambia el origen de los datos solo se deberia cambiar esta clase y no el resto del codigo
+/*
+Factory Method
+Con esto el controlador pide un DAO a esta clase sin saber internamente si usa EmpleadoDAO o NominaDAO
+Si se cambia el origen de los datos solo se deberia cambiar esta clase y no el resto del codigo
  */
 public class DAOFactory {
 
